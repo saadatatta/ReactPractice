@@ -1,47 +1,87 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import "./App.css";
+import Radium from "radium";
 
-import './App.css';
-import Person  from './Person/Person';
+import Person from "./Person/Person";
 
 class App extends Component {
-
   state = {
-    persons : [
-      {name : "saadat"}
-    ]
-  }
+    persons: [{ id: "1", name: "saadat" }, { id: "2", name: "ali" }],
+    isHidden: false
+  };
 
-  changeNameHandler = (name)=>{
-    this.setState({
-      persons : [
-        {name : name}
-      ]
+  changeNameHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id == id;
     });
-  }
-    
-  inputNameHandler = (event) => {
-   
+
+    const persons = [...this.state.persons];
+    persons[personIndex].name = event.target.value;
+
     this.setState({
-      persons : [
-        {name : event.target.value}
-      ]
+      persons: persons
     });
-  }
+  };
+
+  inputNameHandler = event => {
+    this.setState({
+      persons: [{ name: event.target.value }]
+    });
+  };
+
+  showInformation = () => {
+    this.setState({
+      isHidden: !this.state.isHidden
+    });
+  };
+
+  deletePerson = index => {
+    // const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
+    persons.splice(index, 1);
+    this.setState({ persons: persons });
+  };
 
   render() {
+    let style = {
+      backgroundColor: "red",
+      ":hover": {
+        backgroundColor: "blue"
+      },
+      "@media (min-width:450px)": {
+        width: "200px"
+      }
+    };
+
+    let person = null;
+
+    if (this.state.isHidden) {
+      person = (
+        <div>
+          {this.state.persons.map((person, index) => {
+            return (
+              <Person
+                key={person.id}
+                name={person.name}
+                click={() => this.deletePerson(index)}
+                changed={event => this.changeNameHandler(event, person.id)}
+              />
+            );
+          })}
+        </div>
+      );
+    }
     return (
       <div>
         {/* React.createElement('h1',{className:'test'},"This is a heading.") */}
-        <Person name= {this.state.persons[0].name} 
-            click ={this.changeNameHandler.bind(this,"Goku")}
-            changed = {this.inputNameHandler} >
-          How are you?
-        </Person>
-        
-        <button onClick={this.changeNameHandler}>Change Name</button>
+        How are you?
+        <button style={style} onClick={this.showInformation}>
+          Show Information
+        </button>
+        {person}
       </div>
     );
   }
 }
 
-export default App;
+export default Radium(App);
