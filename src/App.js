@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import classes from "./App.css";
 import Radium from "radium";
 
 import Person from "./Person/Person";
@@ -43,16 +43,6 @@ class App extends Component {
   };
 
   render() {
-    let style = {
-      backgroundColor: "red",
-      ":hover": {
-        backgroundColor: "blue"
-      },
-      "@media (min-width:450px)": {
-        width: "200px"
-      }
-    };
-
     let person = null;
 
     if (this.state.isHidden) {
@@ -71,11 +61,15 @@ class App extends Component {
         </div>
       );
     }
+
+    let applyClasses = "";
+    applyClasses = classes.red;
+    console.log(classes);
     return (
       <div>
         {/* React.createElement('h1',{className:'test'},"This is a heading.") */}
         How are you?
-        <button style={style} onClick={this.showInformation}>
+        <button className={applyClasses} onClick={this.showInformation}>
           Show Information
         </button>
         {person}
