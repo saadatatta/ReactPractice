@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import classes from "./App.css";
 import Radium from "radium";
-import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
-import Person from "./Person/Person";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
+import Persons from "../components/Persons/Persons";
 
 class App extends Component {
   state = {
@@ -48,17 +48,14 @@ class App extends Component {
     if (this.state.isHidden) {
       person = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return (
-              <ErrorBoundary key={person.id} s>
-                <Person
-                  name={person.name}
-                  click={() => this.deletePerson(index)}
-                  changed={event => this.changeNameHandler(event, person.id)}
-                />
-              </ErrorBoundary>
-            );
-          })}
+          return (
+          <ErrorBoundary>
+            <Persons
+              persons={this.state.persons}
+              clicked={this.deletePerson}
+              changed={this.changeNameHandler}
+            />
+          </ErrorBoundary>
         </div>
       );
     }
