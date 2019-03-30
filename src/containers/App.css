@@ -2,10 +2,4 @@
   text-align: center;
 }
 
-.red {
-  background-color: red;
-}
 
-button.red:hover {
-  background-color: blue;
-}

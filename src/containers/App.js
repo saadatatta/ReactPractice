@@ -3,6 +3,7 @@ import classes from "./App.css";
 import Radium from "radium";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import Persons from "../components/Persons/Persons";
+import Cockpit from '../components/cockpit/cockpit';
 
 class App extends Component {
   state = {
@@ -48,7 +49,7 @@ class App extends Component {
     if (this.state.isHidden) {
       person = (
         <div>
-          return (
+        
           <ErrorBoundary>
             <Persons
               persons={this.state.persons}
@@ -62,14 +63,11 @@ class App extends Component {
 
     let applyClasses = "";
     applyClasses = classes.red;
-    console.log(classes);
+
     return (
       <div>
         {/* React.createElement('h1',{className:'test'},"This is a heading.") */}
-        How are you?
-        <button className={applyClasses} onClick={this.showInformation}>
-          Show Information
-        </button>
+        <Cockpit clicked = {this.showInformation} ></Cockpit>
         {person}
       </div>
     );
